@@ -1,5 +1,7 @@
 # PLAYDATA METAVERSE 개인 포트폴리오
 
+![PLAYDATA METAVERSE 소개 배너](assets/overview/logo.png)
+
 학습하고 소통하는 메타버스 공간을 만드는 팀 프로젝트입니다. 이 저장소는 **vvjeffvv3가 참여한 이벤트·게임 콘텐츠, 이용 흐름 개선, 게시판 데이터 처리 작업**을 정리합니다.
 
 > 포트폴리오 정리 중입니다. 현재는 설명 문서와 자료 폴더가 있으며, 실행 가능한 전체 서비스 코드는 포함되어 있지 않습니다.
@@ -14,7 +16,7 @@ PLAYDATA METAVERSE는 가상 공간에서 이동하며 학습 콘텐츠, 소통 
 | 개인 계정 | [vvjeffvv3](https://github.com/vvjeffvv3) |
 | 주요 작업 영역 | 이벤트 운영, 게임과 미션, 입장·이동 경험, 게시판 조회 및 변경 기록 |
 | 원본 코드와 협업 기록 | 팀 비공개 저장소에서 관리 |
-| 현재 공개 자료 | 프로젝트 설명, 개인 기여 요약, 기능별 기록 초안 |
+| 현재 공개 자료 | 원본 소개 이미지 8장, 메인 미션 ERD, 구조 설명, 개인 기여 기록 |
 
 ## 개인 담당 작업
 
@@ -84,14 +86,65 @@ PR와 이슈 수는 협업 활동 지표입니다. 같은 기능의 이슈와 PR
 
 각 사례는 문제 상황, 개인 담당 범위, 구현 선택, 확인 결과, 남은 개선점 순서로 작성합니다. 성능 수치를 추가할 때는 측정 환경과 비교 조건을 함께 기록합니다.
 
-## 화면과 시연 자료
+## 원본에서 가져온 서비스 소개 자료
 
-화면과 영상은 준비 중입니다. 공개 자료가 추가되면 아래 문서에서 기능 설명과 함께 볼 수 있습니다.
+원본 팀 저장소의 소개 이미지입니다. **AI로 구성한 홍보 이미지가 포함되어 있어 실제 실행 화면과 차이가 있으며, 개인 구현 결과를 증명하는 캡처로 사용하지 않습니다.** 이미지 안의 접속 주소는 제작 당시 안내입니다.
 
-- [시연 구성과 화면 목록](docs/demo.md)
-- [화면 캡처 폴더](assets/screenshots/README.md)
-- [구조도 폴더](assets/diagrams/README.md)
-- [시연 영상 안내](assets/videos/README.md)
+### 학습교실
+
+Python·SQL 문제 풀이, 코드 빈칸과 오답 복습을 소개합니다.
+
+![학습교실 소개 이미지](assets/overview/learning-classroom.png)
+
+### 커뮤니티와 소통
+
+게시판에서 질문과 학습 자료를 나누고, 가까운 동료에게 찌르기로 인사하는 기능을 소개합니다.
+
+![게시판 소개 이미지](assets/overview/community-board.png)
+
+<details>
+<summary>찌르기, 옥상, 식단과 광고 소개 더 보기</summary>
+
+![찌르기 소개 이미지](assets/overview/poke.png)
+
+![옥상 소개 이미지](assets/overview/rooftop-fountain.png)
+
+![식단과 메뉴 추천 소개 이미지](assets/overview/lunch-menu.png)
+
+![광고판 소개 이미지](assets/overview/campus-ad-board.png)
+
+</details>
+
+## 메인 미션 데이터 구조
+
+원본의 PostgreSQL 메인 미션 ERD를 가져왔습니다. 2026년 11월 3일 기준 문서이며, 단계 진행 상태와 게임 한 판의 기록을 분리한 구조를 보여줍니다.
+
+![메인 미션 ERD 미리보기](assets/diagrams/main-mission/preview.png)
+
+- [테이블 관계와 컬럼 설명](docs/reference/main-mission-erd.md)
+- [ERD HTML 원본](assets/diagrams/main-mission/index.html) — 다운로드 후 브라우저에서 열면 확대와 테이블 검색 가능
+- [스키마 JSON](assets/diagrams/main-mission/schema.json)
+- [플랫폼 구조와 요청 흐름](docs/architecture.md)
+
+구조 자료는 팀 프로젝트 전체의 설계 참고 자료입니다. 개인 담당 작업은 위의 개인 기여 설명과 구분합니다.
+
+## 팀 구성
+
+원본 소개 문서에 기재된 역할입니다.
+
+| 이름 | 담당 | GitHub |
+| --- | --- | --- |
+| 이재원 | 플랫폼 | [vvjeffvv3](https://github.com/vvjeffvv3) |
+| 강한솔 | 플랫폼 | [hansolsmart](https://github.com/hansolsmart) |
+| 신동엽 | 데이터 파이프라인 | [sdyeob](https://github.com/sdyeob) |
+| 김남동 | 광고 서버 | [rlaskaehd](https://github.com/rlaskaehd) |
+| 조성현 | 인프라 구축 | [seonghyeonjo2](https://github.com/seonghyeonjo2) |
+
+## 시연 자료와 출처
+
+[공개 자료 목록](docs/demo.md)에서 가져온 이미지와 설계 문서를 확인할 수 있습니다. 실제 실행 화면과 자체 시연 영상은 추가 예정입니다. 원본 소개 문서의 영상은 외부 접근 여부를 확인하기 전까지 공개 시연으로 안내하지 않습니다.
+
+자료의 원본 경로, 브랜치와 커밋은 [자료 출처](docs/reference/source-materials.md)에 기록했습니다.
 
 ## 문서와 작업공간
 
@@ -114,4 +167,4 @@ PR와 이슈 수는 협업 활동 지표입니다. 같은 기능의 이슈와 PR
 - [개인 작성 PR 목록 — 접근 권한 필요](https://github.com/playdatametaverse/playdatametaverse/pulls?q=is%3Apr+author%3Avvjeffvv3)
 - [개인 작성 이슈 목록 — 접근 권한 필요](https://github.com/playdatametaverse/playdatametaverse/issues?q=is%3Aissue+author%3Avvjeffvv3)
 
-공개 화면과 구조도, 시연 자료는 이 저장소에 모아 외부에서도 작업 내용을 살펴볼 수 있도록 보완합니다.
+소개 이미지와 ERD는 이 저장소에 복사해 외부에서도 열람할 수 있습니다. 실제 실행 캡처와 시연 영상은 추가 예정입니다.

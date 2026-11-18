@@ -1,0 +1,2219 @@
+{
+  "database": "PostgreSQL 16",
+  "userKey": "auth_user.id UUID",
+  "groups": {
+    "core": [
+      "identity.User",
+      "eventing.PlatformSession",
+      "event_story.GameDefinition",
+      "event_story.EventDefinition",
+      "event_story.EventProgress",
+      "event_story.GamePlay"
+    ],
+    "learning": [
+      "learning.LearningSession",
+      "learning.SessionQuestion",
+      "learning.Question",
+      "learning.QuestionChoice",
+      "learning.UserAnswer"
+    ],
+    "points": [
+      "accounts.Profile",
+      "eventing.ClassGroup",
+      "learning.PointWallet",
+      "learning.PointLedger"
+    ],
+    "operation": [
+      "event_story.StoryProgress",
+      "event_story.StoryRecord",
+      "campus_control.FreezeState",
+      "campus_control.FreezeChange"
+    ],
+    "references": [
+      "eventing.ContentItem",
+      "eventing.ContentCategory",
+      "eventing.MapZone",
+      "eventing.MapFloor"
+    ]
+  },
+  "titles": {
+    "core": "메인 진행·게임 기록",
+    "learning": "Python 학습·채점",
+    "points": "계정 프로필·포인트",
+    "operation": "일일 안내·프리즈",
+    "references": "학습 콘텐츠 참조"
+  },
+  "tables": [
+    {
+      "name": "auth_user",
+      "model": "identity.User",
+      "group": "core",
+      "role": "UUID 계정. 비밀번호 등 인증 컬럼은 구조만 표시하며 값은 포함하지 않음",
+      "fields": [
+        {
+          "name": "password",
+          "type": "character varying(128)",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "인증용 비밀번호 해시 컬럼. 문서에 실제 값은 포함하지 않음"
+        },
+        {
+          "name": "last_login",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "마지막 로그인"
+        },
+        {
+          "name": "is_superuser",
+          "type": "boolean",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "최상위 사용자 권한"
+        },
+        {
+          "name": "username",
+          "type": "character varying(150)",
+          "nullable": false,
+          "pk": false,
+          "unique": true,
+          "fk": null,
+          "note": "사용자 이름"
+        },
+        {
+          "name": "first_name",
+          "type": "character varying(150)",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "이름"
+        },
+        {
+          "name": "last_name",
+          "type": "character varying(150)",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "성"
+        },
+        {
+          "name": "email",
+          "type": "character varying(254)",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "이메일 주소"
+        },
+        {
+          "name": "is_staff",
+          "type": "boolean",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "스태프 권한"
+        },
+        {
+          "name": "is_active",
+          "type": "boolean",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "활성"
+        },
+        {
+          "name": "date_joined",
+          "type": "timestamp with time zone",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "등록일"
+        },
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false,
+          "pk": true,
+          "unique": true,
+          "fk": null,
+          "note": "id"
+        }
+      ],
+      "unique": [
+        {
+          "columns": [
+            "username"
+          ],
+          "name": "auth_user_username_key"
+        }
+      ]
+    },
+    {
+      "name": "eventing_platformsession",
+      "model": "eventing.PlatformSession",
+      "group": "core",
+      "role": "platform session",
+      "fields": [
+        {
+          "name": "session_uuid",
+          "type": "uuid",
+          "nullable": false,
+          "pk": true,
+          "unique": true,
+          "fk": null,
+          "note": "접속 이력 키. StoryRecord에서는 문자열이며 FK가 아님"
+        },
+        {
+          "name": "user_id",
+          "type": "uuid",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": {
+            "table": "auth_user",
+            "column": "id"
+          },
+          "note": "UUID 계정 FK"
+        },
+        {
+          "name": "started_at",
+          "type": "timestamp with time zone",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "started at"
+        },
+        {
+          "name": "ended_at",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "ended at"
+        },
+        {
+          "name": "end_reason",
+          "type": "character varying(24)",
+          "nullable": true,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "end reason"
+        },
+        {
+          "name": "last_seen_at",
+          "type": "timestamp with time zone",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "last seen at"
+        }
+      ],
+      "unique": []
+    },
+    {
+      "name": "game_definition",
+      "model": "event_story.GameDefinition",
+      "group": "core",
+      "role": "내부 게임 실행 코드와 활성·배치 상태",
+      "fields": [
+        {
+          "name": "game_uuid",
+          "type": "uuid",
+          "nullable": false,
+          "pk": true,
+          "unique": true,
+          "fk": null,
+          "note": "game uuid"
+        },
+        {
+          "name": "game_code",
+          "type": "character varying(48)",
+          "nullable": false,
+          "pk": false,
+          "unique": true,
+          "fk": null,
+          "note": "JS 실행 함수와 연결하는 고정 코드"
+        },
+        {
+          "name": "game_name",
+          "type": "character varying(120)",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "game name"
+        },
+        {
+          "name": "is_enabled",
+          "type": "boolean",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "새 게임 시작 허용 여부"
+        },
+        {
+          "name": "is_placed",
+          "type": "boolean",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "배치 현황 표시. 실제 맵 오브젝트와 별개 메타데이터"
+        }
+      ],
+      "unique": [
+        {
+          "columns": [
+            "game_code"
+          ],
+          "name": "game_definition_game_code_key"
+        }
+      ]
+    },
+    {
+      "name": "event_definition",
+      "model": "event_story.EventDefinition",
+      "group": "core",
+      "role": "행사·대표 단계·세부 제작 공정의 정의",
+      "fields": [
+        {
+          "name": "event_uuid",
+          "type": "uuid",
+          "nullable": false,
+          "pk": true,
+          "unique": true,
+          "fk": null,
+          "note": "이벤트 항목 UUID"
+        },
+        {
+          "name": "parent_event_id",
+          "type": "uuid",
+          "nullable": true,
+          "pk": false,
+          "unique": false,
+          "fk": {
+            "table": "event_definition",
+            "column": "event_uuid"
+          },
+          "note": "부모 항목. 대표 STEP은 행사 아래, 제작 공정은 STEP 05 아래"
+        },
+        {
+          "name": "event_type",
+          "type": "character varying(16)",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "event type"
+        },
+        {
+          "name": "event_name",
+          "type": "character varying(120)",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "event name"
+        },
+        {
+          "name": "step_order",
+          "type": "smallint",
+          "nullable": true,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "같은 부모 아래의 순서. 현재 제작 공정 1~4"
+        },
+        {
+          "name": "game_id",
+          "type": "uuid",
+          "nullable": true,
+          "pk": false,
+          "unique": false,
+          "fk": {
+            "table": "game_definition",
+            "column": "game_uuid"
+          },
+          "note": "실행 게임. 대화/전달 단계는 NULL"
+        },
+        {
+          "name": "starts_at",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "행사 기간 보관. 현재 시간 판정은 main.window()의 운영 시간표 사용"
+        },
+        {
+          "name": "ends_at",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "행사 기간 보관. 현재 시간 판정은 main.window()의 운영 시간표 사용"
+        }
+      ],
+      "unique": [
+        {
+          "columns": [
+            "parent_event_id",
+            "step_order"
+          ],
+          "name": "event_sibling_order_unique"
+        }
+      ]
+    },
+    {
+      "name": "event_progress",
+      "model": "event_story.EventProgress",
+      "group": "core",
+      "role": "계정별 최초 진입·완료 상태와 최종 순번",
+      "fields": [
+        {
+          "name": "progress_uuid",
+          "type": "uuid",
+          "nullable": false,
+          "pk": true,
+          "unique": true,
+          "fk": null,
+          "note": "progress uuid"
+        },
+        {
+          "name": "user_id",
+          "type": "uuid",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": {
+            "table": "auth_user",
+            "column": "id"
+          },
+          "note": "UUID 계정 FK"
+        },
+        {
+          "name": "event_id",
+          "type": "uuid",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": {
+            "table": "event_definition",
+            "column": "event_uuid"
+          },
+          "note": "연결된 단계. 연습 모드의 game_play에서는 NULL"
+        },
+        {
+          "name": "status",
+          "type": "character varying(16)",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "IN_PROGRESS / COMPLETED (행 없음은 미시작)"
+        },
+        {
+          "name": "started_at",
+          "type": "timestamp with time zone",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "started at"
+        },
+        {
+          "name": "completed_at",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "completed at"
+        },
+        {
+          "name": "completion_order",
+          "type": "bigint",
+          "nullable": true,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "최초 최종 전달 순번. 재전송 시 유지"
+        }
+      ],
+      "unique": [
+        {
+          "columns": [
+            "user_id",
+            "event_id"
+          ],
+          "name": "event_progress_user_unique"
+        },
+        {
+          "columns": [
+            "event_id",
+            "completion_order"
+          ],
+          "name": "event_completion_order_unique"
+        }
+      ]
+    },
+    {
+      "name": "game_play",
+      "model": "event_story.GamePlay",
+      "group": "core",
+      "role": "한 판의 시작·종료·판정 근거·점수 기록",
+      "fields": [
+        {
+          "name": "play_uuid",
+          "type": "uuid",
+          "nullable": false,
+          "pk": true,
+          "unique": true,
+          "fk": null,
+          "note": "한 판과 결과 재전송을 식별하는 키"
+        },
+        {
+          "name": "user_id",
+          "type": "uuid",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": {
+            "table": "auth_user",
+            "column": "id"
+          },
+          "note": "UUID 계정 FK"
+        },
+        {
+          "name": "session_id",
+          "type": "uuid",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": {
+            "table": "eventing_platformsession",
+            "column": "session_uuid"
+          },
+          "note": "session"
+        },
+        {
+          "name": "game_id",
+          "type": "uuid",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": {
+            "table": "game_definition",
+            "column": "game_uuid"
+          },
+          "note": "실행 게임. 대화/전달 단계는 NULL"
+        },
+        {
+          "name": "event_id",
+          "type": "uuid",
+          "nullable": true,
+          "pk": false,
+          "unique": false,
+          "fk": {
+            "table": "event_definition",
+            "column": "event_uuid"
+          },
+          "note": "연결된 단계. 연습 모드의 game_play에서는 NULL"
+        },
+        {
+          "name": "difficulty",
+          "type": "character varying(20)",
+          "nullable": true,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "현재 이벤트 게임에서는 난이도를 고르지 않아 NULL"
+        },
+        {
+          "name": "status",
+          "type": "character varying(16)",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "RUNNING / SUCCESS / FAILED / INTERRUPTED / FINISHED(터치 점수만)"
+        },
+        {
+          "name": "started_at",
+          "type": "timestamp with time zone",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "started at"
+        },
+        {
+          "name": "ended_at",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "ended at"
+        },
+        {
+          "name": "duration_ms",
+          "type": "bigint",
+          "nullable": true,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "시작 승인부터 종료 확정까지 서버 경과시간(ms)"
+        },
+        {
+          "name": "evidence",
+          "type": "jsonb",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "시작 challenge + 결과 proof, 터치 게임은 score 포함"
+        }
+      ],
+      "unique": []
+    },
+    {
+      "name": "learning_learningsession",
+      "model": "learning.LearningSession",
+      "group": "learning",
+      "role": "Python 초급 객관식 10문항의 서버 채점 결과를 STEP 02에 반영",
+      "fields": [
+        {
+          "name": "session_id",
+          "type": "bigint",
+          "nullable": false,
+          "pk": true,
+          "unique": true,
+          "fk": null,
+          "note": "session id"
+        },
+        {
+          "name": "subject",
+          "type": "character varying(10)",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "python / sql"
+        },
+        {
+          "name": "user_id",
+          "type": "uuid",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": {
+            "table": "auth_user",
+            "column": "id"
+          },
+          "note": "UUID 계정 FK"
+        },
+        {
+          "name": "question_type",
+          "type": "character varying(20)",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "multiple_choice / fill_blank"
+        },
+        {
+          "name": "difficulty",
+          "type": "character varying(20)",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "현재 이벤트 게임에서는 난이도를 고르지 않아 NULL"
+        },
+        {
+          "name": "started_at",
+          "type": "timestamp with time zone",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "started at"
+        },
+        {
+          "name": "completed_at",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "completed at"
+        },
+        {
+          "name": "total_questions",
+          "type": "smallint",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "메인 Python 기준 10문항"
+        },
+        {
+          "name": "correct_count",
+          "type": "smallint",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "서버가 확정한 정답 수"
+        }
+      ],
+      "unique": []
+    },
+    {
+      "name": "learning_sessionquestion",
+      "model": "learning.SessionQuestion",
+      "group": "learning",
+      "role": "session question",
+      "fields": [
+        {
+          "name": "session_question_id",
+          "type": "bigint",
+          "nullable": false,
+          "pk": true,
+          "unique": true,
+          "fk": null,
+          "note": "session question id"
+        },
+        {
+          "name": "session_id",
+          "type": "bigint",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": {
+            "table": "learning_learningsession",
+            "column": "session_id"
+          },
+          "note": "session"
+        },
+        {
+          "name": "question_id",
+          "type": "bigint",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": {
+            "table": "learning_question",
+            "column": "question_id"
+          },
+          "note": "question"
+        },
+        {
+          "name": "question_order",
+          "type": "smallint",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "세트 안 문항 순서"
+        },
+        {
+          "name": "started_at",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "started at"
+        }
+      ],
+      "unique": [
+        {
+          "columns": [
+            "session_id",
+            "question_id"
+          ],
+          "name": "session_question_unique"
+        },
+        {
+          "columns": [
+            "session_id",
+            "question_order"
+          ],
+          "name": "session_order_unique"
+        }
+      ]
+    },
+    {
+      "name": "learning_question",
+      "model": "learning.Question",
+      "group": "learning",
+      "role": "question",
+      "fields": [
+        {
+          "name": "question_id",
+          "type": "bigint",
+          "nullable": false,
+          "pk": true,
+          "unique": true,
+          "fk": null,
+          "note": "question id"
+        },
+        {
+          "name": "question_uuid",
+          "type": "uuid",
+          "nullable": false,
+          "pk": false,
+          "unique": true,
+          "fk": null,
+          "note": "question uuid"
+        },
+        {
+          "name": "subject",
+          "type": "character varying(10)",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "python / sql"
+        },
+        {
+          "name": "question_code",
+          "type": "character varying(32)",
+          "nullable": true,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "question code"
+        },
+        {
+          "name": "question_type",
+          "type": "character varying(20)",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "multiple_choice / fill_blank"
+        },
+        {
+          "name": "difficulty",
+          "type": "character varying(20)",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "현재 이벤트 게임에서는 난이도를 고르지 않아 NULL"
+        },
+        {
+          "name": "category",
+          "type": "character varying(40)",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "category"
+        },
+        {
+          "name": "question_text",
+          "type": "text",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "문제의 질문"
+        },
+        {
+          "name": "code_snippet",
+          "type": "text",
+          "nullable": true,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "문제 코드"
+        },
+        {
+          "name": "correct_answer",
+          "type": "text",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "서버 채점 정답. 일반 미션 상태 응답으로 공개하지 않음"
+        },
+        {
+          "name": "explanation",
+          "type": "text",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "문제 해설"
+        },
+        {
+          "name": "is_active",
+          "type": "boolean",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "is active"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "created at"
+        }
+      ],
+      "unique": [
+        {
+          "columns": [
+            "subject",
+            "question_code"
+          ],
+          "name": "subject_question_code_unique"
+        },
+        {
+          "columns": [
+            "question_uuid"
+          ],
+          "name": "learning_question_question_uuid_d699a9c5_uniq"
+        }
+      ]
+    },
+    {
+      "name": "learning_questionchoice",
+      "model": "learning.QuestionChoice",
+      "group": "learning",
+      "role": "question choice",
+      "fields": [
+        {
+          "name": "choice_id",
+          "type": "bigint",
+          "nullable": false,
+          "pk": true,
+          "unique": true,
+          "fk": null,
+          "note": "choice id"
+        },
+        {
+          "name": "choice_uuid",
+          "type": "uuid",
+          "nullable": false,
+          "pk": false,
+          "unique": true,
+          "fk": null,
+          "note": "choice uuid"
+        },
+        {
+          "name": "question_id",
+          "type": "bigint",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": {
+            "table": "learning_question",
+            "column": "question_id"
+          },
+          "note": "question"
+        },
+        {
+          "name": "choice_no",
+          "type": "smallint",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "객관식 보기 번호"
+        },
+        {
+          "name": "choice_text",
+          "type": "text",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "객관식 보기 내용"
+        }
+      ],
+      "unique": [
+        {
+          "columns": [
+            "question_id",
+            "choice_no"
+          ],
+          "name": "choice_question_no_unique"
+        },
+        {
+          "columns": [
+            "choice_uuid"
+          ],
+          "name": "learning_questionchoice_choice_uuid_2f20a016_uniq"
+        }
+      ]
+    },
+    {
+      "name": "learning_useranswer",
+      "model": "learning.UserAnswer",
+      "group": "learning",
+      "role": "문항별 각 제출·채점 결과. 정답 제출은 포인트 지급과 연결",
+      "fields": [
+        {
+          "name": "answer_id",
+          "type": "bigint",
+          "nullable": false,
+          "pk": true,
+          "unique": true,
+          "fk": null,
+          "note": "answer id"
+        },
+        {
+          "name": "attempt_uuid",
+          "type": "uuid",
+          "nullable": false,
+          "pk": false,
+          "unique": true,
+          "fk": null,
+          "note": "제출 UUID. 포인트 원장이 이 고유 컬럼을 참조"
+        },
+        {
+          "name": "submission_request_uuid",
+          "type": "uuid",
+          "nullable": true,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "답안 재전송 중복 방지 키"
+        },
+        {
+          "name": "user_id",
+          "type": "uuid",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": {
+            "table": "auth_user",
+            "column": "id"
+          },
+          "note": "UUID 계정 FK"
+        },
+        {
+          "name": "platform_session_id",
+          "type": "uuid",
+          "nullable": true,
+          "pk": false,
+          "unique": false,
+          "fk": {
+            "table": "eventing_platformsession",
+            "column": "session_uuid"
+          },
+          "note": "platform session"
+        },
+        {
+          "name": "content_id",
+          "type": "uuid",
+          "nullable": true,
+          "pk": false,
+          "unique": false,
+          "fk": {
+            "table": "eventing_contentitem",
+            "column": "content_uuid"
+          },
+          "note": "content"
+        },
+        {
+          "name": "selected_choice_id",
+          "type": "bigint",
+          "nullable": true,
+          "pk": false,
+          "unique": false,
+          "fk": {
+            "table": "learning_questionchoice",
+            "column": "choice_id"
+          },
+          "note": "선택한 객관식 보기. 빈칸 문제는 NULL"
+        },
+        {
+          "name": "response_snapshot",
+          "type": "jsonb",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "당시 응답 정보 스냅샷"
+        },
+        {
+          "name": "session_question_id",
+          "type": "bigint",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": {
+            "table": "learning_sessionquestion",
+            "column": "session_question_id"
+          },
+          "note": "session question"
+        },
+        {
+          "name": "submitted_answer",
+          "type": "text",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "사용자가 제출한 값"
+        },
+        {
+          "name": "is_correct",
+          "type": "boolean",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "서버 채점 결과"
+        },
+        {
+          "name": "attempt_no",
+          "type": "integer",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "해당 문항의 제출 차수. 기존 최대 3회"
+        },
+        {
+          "name": "answered_at",
+          "type": "timestamp with time zone",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "answered at"
+        }
+      ],
+      "unique": [
+        {
+          "columns": [
+            "attempt_uuid"
+          ],
+          "name": "learning_useranswer_attempt_uuid_48f26ff7_uniq"
+        },
+        {
+          "columns": [
+            "session_question_id",
+            "attempt_no"
+          ],
+          "name": "answer_attempt_unique"
+        },
+        {
+          "columns": [
+            "user_id",
+            "submission_request_uuid"
+          ],
+          "name": "answer_user_request_unique"
+        }
+      ]
+    },
+    {
+      "name": "accounts_profile",
+      "model": "accounts.Profile",
+      "group": "points",
+      "role": "profile",
+      "fields": [
+        {
+          "name": "user_id",
+          "type": "uuid",
+          "nullable": false,
+          "pk": true,
+          "unique": true,
+          "fk": {
+            "table": "auth_user",
+            "column": "id"
+          },
+          "note": "UUID 계정 FK"
+        },
+        {
+          "name": "nickname",
+          "type": "character varying(20)",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "UI·랭킹에 표시하는 닉네임"
+        },
+        {
+          "name": "avatar",
+          "type": "character varying(8)",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "캐릭터 선택"
+        },
+        {
+          "name": "cohort",
+          "type": "uuid",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": {
+            "table": "eventing_classgroup",
+            "column": "class_group_uuid"
+          },
+          "note": "과정/기수 FK"
+        },
+        {
+          "name": "setup_complete",
+          "type": "boolean",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "캐릭터 설정 완료 여부"
+        },
+        {
+          "name": "guide_completed",
+          "type": "boolean",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "초기 안내 완료 여부"
+        }
+      ],
+      "unique": []
+    },
+    {
+      "name": "eventing_classgroup",
+      "model": "eventing.ClassGroup",
+      "group": "points",
+      "role": "class group",
+      "fields": [
+        {
+          "name": "class_group_uuid",
+          "type": "uuid",
+          "nullable": false,
+          "pk": true,
+          "unique": true,
+          "fk": null,
+          "note": "class group uuid"
+        },
+        {
+          "name": "code",
+          "type": "character varying(24)",
+          "nullable": false,
+          "pk": false,
+          "unique": true,
+          "fk": null,
+          "note": "code"
+        },
+        {
+          "name": "name",
+          "type": "character varying(80)",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "name"
+        },
+        {
+          "name": "status",
+          "type": "character varying(16)",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "status"
+        }
+      ],
+      "unique": [
+        {
+          "columns": [
+            "code"
+          ],
+          "name": "eventing_classgroup_code_key"
+        }
+      ]
+    },
+    {
+      "name": "learning_pointwallet",
+      "model": "learning.PointWallet",
+      "group": "points",
+      "role": "point wallet",
+      "fields": [
+        {
+          "name": "user_uuid",
+          "type": "uuid",
+          "nullable": false,
+          "pk": true,
+          "unique": true,
+          "fk": {
+            "table": "accounts_profile",
+            "column": "user_id"
+          },
+          "note": "실제 DB 컬럼명. 프로필/포인트 계정 UUID 참조"
+        },
+        {
+          "name": "balance",
+          "type": "bigint",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "보유 포인트"
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "updated at"
+        }
+      ],
+      "unique": []
+    },
+    {
+      "name": "learning_pointledger",
+      "model": "learning.PointLedger",
+      "group": "points",
+      "role": "point ledger",
+      "fields": [
+        {
+          "name": "ledger_uuid",
+          "type": "uuid",
+          "nullable": false,
+          "pk": true,
+          "unique": true,
+          "fk": null,
+          "note": "ledger uuid"
+        },
+        {
+          "name": "user_uuid",
+          "type": "uuid",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": {
+            "table": "accounts_profile",
+            "column": "user_id"
+          },
+          "note": "실제 DB 컬럼명. 프로필/포인트 계정 UUID 참조"
+        },
+        {
+          "name": "attempt_uuid",
+          "type": "uuid",
+          "nullable": false,
+          "pk": false,
+          "unique": true,
+          "fk": {
+            "table": "learning_useranswer",
+            "column": "attempt_uuid"
+          },
+          "note": "제출 UUID. 포인트 원장이 이 고유 컬럼을 참조"
+        },
+        {
+          "name": "delta",
+          "type": "bigint",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "적립량"
+        },
+        {
+          "name": "balance_after",
+          "type": "bigint",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "적립 후 잔액"
+        },
+        {
+          "name": "granted_at",
+          "type": "timestamp with time zone",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "적립 확정 시각"
+        }
+      ],
+      "unique": [
+        {
+          "columns": [
+            "attempt_uuid"
+          ],
+          "name": "learning_pointledger_attempt_uuid_key"
+        }
+      ]
+    },
+    {
+      "name": "event_story_storyprogress",
+      "model": "event_story.StoryProgress",
+      "group": "operation",
+      "role": "새 메인 단계에는 사용하지 않음. 일일 안내 노출 묶음만 사용",
+      "fields": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "nullable": false,
+          "pk": true,
+          "unique": true,
+          "fk": null,
+          "note": "ID"
+        },
+        {
+          "name": "user_id",
+          "type": "uuid",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": {
+            "table": "auth_user",
+            "column": "id"
+          },
+          "note": "UUID 계정 FK"
+        },
+        {
+          "name": "event_key",
+          "type": "character varying(40)",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "일일 안내 묶음 pepero-2026-ui-notices"
+        },
+        {
+          "name": "started_at",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "레거시 칼럼. 현재 일일 안내 및 새 메인 완료 판정에 사용하지 않음"
+        },
+        {
+          "name": "completed_at",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "레거시 칼럼. 현재 일일 안내 및 새 메인 완료 판정에 사용하지 않음"
+        },
+        {
+          "name": "flags",
+          "type": "jsonb",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "레거시 칼럼. 현재 일일 안내 및 새 메인 완료 판정에 사용하지 않음"
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "updated at"
+        }
+      ],
+      "unique": [
+        {
+          "columns": [
+            "user_id",
+            "event_key"
+          ],
+          "name": "story_user_event_unique"
+        }
+      ]
+    },
+    {
+      "name": "event_story_storyrecord",
+      "model": "event_story.StoryRecord",
+      "group": "operation",
+      "role": "일일 안내를 계정·날짜별로 한 번 기록",
+      "fields": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "nullable": false,
+          "pk": true,
+          "unique": true,
+          "fk": null,
+          "note": "ID"
+        },
+        {
+          "name": "event_id",
+          "type": "uuid",
+          "nullable": false,
+          "pk": false,
+          "unique": true,
+          "fk": null,
+          "note": "연결된 단계. 연습 모드의 game_play에서는 NULL"
+        },
+        {
+          "name": "progress_id",
+          "type": "bigint",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": {
+            "table": "event_story_storyprogress",
+            "column": "id"
+          },
+          "note": "progress"
+        },
+        {
+          "name": "key",
+          "type": "character varying(100)",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "일일 안내에서는 한국시간 날짜 문자열"
+        },
+        {
+          "name": "kind",
+          "type": "character varying(40)",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "현재 일일 안내: daily_notice"
+        },
+        {
+          "name": "session_uuid",
+          "type": "character varying(40)",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "접속 이력 키. StoryRecord에서는 문자열이며 FK가 아님"
+        },
+        {
+          "name": "payload",
+          "type": "jsonb",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "payload"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "created at"
+        }
+      ],
+      "unique": [
+        {
+          "columns": [
+            "event_id"
+          ],
+          "name": "event_story_storyrecord_event_id_key"
+        },
+        {
+          "columns": [
+            "progress_id",
+            "key"
+          ],
+          "name": "story_record_key_unique"
+        }
+      ]
+    },
+    {
+      "name": "campus_control_freezestate",
+      "model": "campus_control.FreezeState",
+      "group": "operation",
+      "role": "freeze state",
+      "fields": [
+        {
+          "name": "id",
+          "type": "smallint",
+          "nullable": false,
+          "pk": true,
+          "unique": true,
+          "fk": null,
+          "note": "id"
+        },
+        {
+          "name": "paused",
+          "type": "boolean",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "공통 이용 정지 여부"
+        },
+        {
+          "name": "revision",
+          "type": "integer",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "정지 상태 변경 순번 / 충돌 검사"
+        },
+        {
+          "name": "message",
+          "type": "character varying(160)",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "정지 사유 안내"
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "updated at"
+        }
+      ],
+      "unique": []
+    },
+    {
+      "name": "campus_control_freezechange",
+      "model": "campus_control.FreezeChange",
+      "group": "operation",
+      "role": "freeze change",
+      "fields": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "nullable": false,
+          "pk": true,
+          "unique": true,
+          "fk": null,
+          "note": "ID"
+        },
+        {
+          "name": "actor_id",
+          "type": "uuid",
+          "nullable": true,
+          "pk": false,
+          "unique": false,
+          "fk": {
+            "table": "auth_user",
+            "column": "id"
+          },
+          "note": "정지를 변경한 관리자"
+        },
+        {
+          "name": "paused",
+          "type": "boolean",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "공통 이용 정지 여부"
+        },
+        {
+          "name": "revision",
+          "type": "integer",
+          "nullable": false,
+          "pk": false,
+          "unique": true,
+          "fk": null,
+          "note": "정지 상태 변경 순번 / 충돌 검사"
+        },
+        {
+          "name": "message",
+          "type": "character varying(160)",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "정지 사유 안내"
+        },
+        {
+          "name": "changed_at",
+          "type": "timestamp with time zone",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "changed at"
+        }
+      ],
+      "unique": [
+        {
+          "columns": [
+            "revision"
+          ],
+          "name": "campus_control_freezechange_revision_key"
+        }
+      ]
+    },
+    {
+      "name": "eventing_contentitem",
+      "model": "eventing.ContentItem",
+      "group": "references",
+      "role": "content item",
+      "fields": [
+        {
+          "name": "content_uuid",
+          "type": "uuid",
+          "nullable": false,
+          "pk": true,
+          "unique": true,
+          "fk": null,
+          "note": "content uuid"
+        },
+        {
+          "name": "code",
+          "type": "character varying(48)",
+          "nullable": false,
+          "pk": false,
+          "unique": true,
+          "fk": null,
+          "note": "code"
+        },
+        {
+          "name": "category_id",
+          "type": "uuid",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": {
+            "table": "eventing_contentcategory",
+            "column": "category_uuid"
+          },
+          "note": "category"
+        },
+        {
+          "name": "content_kind",
+          "type": "character varying(24)",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "content kind"
+        },
+        {
+          "name": "title",
+          "type": "character varying(120)",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "title"
+        },
+        {
+          "name": "external_url",
+          "type": "character varying(500)",
+          "nullable": true,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "external url"
+        },
+        {
+          "name": "zone_id",
+          "type": "uuid",
+          "nullable": true,
+          "pk": false,
+          "unique": false,
+          "fk": {
+            "table": "eventing_mapzone",
+            "column": "zone_uuid"
+          },
+          "note": "zone"
+        },
+        {
+          "name": "status",
+          "type": "character varying(16)",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "status"
+        },
+        {
+          "name": "published_at",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "published at"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "created at"
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "updated at"
+        }
+      ],
+      "unique": [
+        {
+          "columns": [
+            "code"
+          ],
+          "name": "eventing_contentitem_code_key"
+        }
+      ]
+    },
+    {
+      "name": "eventing_contentcategory",
+      "model": "eventing.ContentCategory",
+      "group": "references",
+      "role": "content category",
+      "fields": [
+        {
+          "name": "category_uuid",
+          "type": "uuid",
+          "nullable": false,
+          "pk": true,
+          "unique": true,
+          "fk": null,
+          "note": "category uuid"
+        },
+        {
+          "name": "code",
+          "type": "character varying(48)",
+          "nullable": false,
+          "pk": false,
+          "unique": true,
+          "fk": null,
+          "note": "code"
+        },
+        {
+          "name": "parent_id",
+          "type": "uuid",
+          "nullable": true,
+          "pk": false,
+          "unique": false,
+          "fk": {
+            "table": "eventing_contentcategory",
+            "column": "category_uuid"
+          },
+          "note": "parent"
+        },
+        {
+          "name": "domain",
+          "type": "character varying(16)",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "domain"
+        },
+        {
+          "name": "name",
+          "type": "character varying(100)",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "name"
+        }
+      ],
+      "unique": [
+        {
+          "columns": [
+            "code"
+          ],
+          "name": "eventing_contentcategory_code_key"
+        }
+      ]
+    },
+    {
+      "name": "eventing_mapzone",
+      "model": "eventing.MapZone",
+      "group": "references",
+      "role": "map zone",
+      "fields": [
+        {
+          "name": "zone_uuid",
+          "type": "uuid",
+          "nullable": false,
+          "pk": true,
+          "unique": true,
+          "fk": null,
+          "note": "zone uuid"
+        },
+        {
+          "name": "floor_id",
+          "type": "uuid",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": {
+            "table": "eventing_mapfloor",
+            "column": "floor_uuid"
+          },
+          "note": "floor"
+        },
+        {
+          "name": "code",
+          "type": "character varying(48)",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "code"
+        },
+        {
+          "name": "zone_type",
+          "type": "character varying(24)",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "zone type"
+        },
+        {
+          "name": "name",
+          "type": "character varying(100)",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "name"
+        }
+      ],
+      "unique": [
+        {
+          "columns": [
+            "floor_id",
+            "code"
+          ],
+          "name": "eventing_floor_zone_code"
+        }
+      ]
+    },
+    {
+      "name": "eventing_mapfloor",
+      "model": "eventing.MapFloor",
+      "group": "references",
+      "role": "map floor",
+      "fields": [
+        {
+          "name": "floor_uuid",
+          "type": "uuid",
+          "nullable": false,
+          "pk": true,
+          "unique": true,
+          "fk": null,
+          "note": "floor uuid"
+        },
+        {
+          "name": "code",
+          "type": "character varying(24)",
+          "nullable": false,
+          "pk": false,
+          "unique": true,
+          "fk": null,
+          "note": "code"
+        },
+        {
+          "name": "name",
+          "type": "character varying(80)",
+          "nullable": false,
+          "pk": false,
+          "unique": false,
+          "fk": null,
+          "note": "name"
+        }
+      ],
+      "unique": [
+        {
+          "columns": [
+            "code"
+          ],
+          "name": "eventing_mapfloor_code_key"
+        }
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "fromTable": "eventing_platformsession",
+      "fromColumn": "user_id",
+      "toTable": "auth_user",
+      "toColumn": "id",
+      "nullable": false,
+      "oneToOne": false
+    },
+    {
+      "fromTable": "event_definition",
+      "fromColumn": "parent_event_id",
+      "toTable": "event_definition",
+      "toColumn": "event_uuid",
+      "nullable": true,
+      "oneToOne": false
+    },
+    {
+      "fromTable": "event_definition",
+      "fromColumn": "game_id",
+      "toTable": "game_definition",
+      "toColumn": "game_uuid",
+      "nullable": true,
+      "oneToOne": false
+    },
+    {
+      "fromTable": "event_progress",
+      "fromColumn": "user_id",
+      "toTable": "auth_user",
+      "toColumn": "id",
+      "nullable": false,
+      "oneToOne": false
+    },
+    {
+      "fromTable": "event_progress",
+      "fromColumn": "event_id",
+      "toTable": "event_definition",
+      "toColumn": "event_uuid",
+      "nullable": false,
+      "oneToOne": false
+    },
+    {
+      "fromTable": "game_play",
+      "fromColumn": "user_id",
+      "toTable": "auth_user",
+      "toColumn": "id",
+      "nullable": false,
+      "oneToOne": false
+    },
+    {
+      "fromTable": "game_play",
+      "fromColumn": "session_id",
+      "toTable": "eventing_platformsession",
+      "toColumn": "session_uuid",
+      "nullable": false,
+      "oneToOne": false
+    },
+    {
+      "fromTable": "game_play",
+      "fromColumn": "game_id",
+      "toTable": "game_definition",
+      "toColumn": "game_uuid",
+      "nullable": false,
+      "oneToOne": false
+    },
+    {
+      "fromTable": "game_play",
+      "fromColumn": "event_id",
+      "toTable": "event_definition",
+      "toColumn": "event_uuid",
+      "nullable": true,
+      "oneToOne": false
+    },
+    {
+      "fromTable": "learning_learningsession",
+      "fromColumn": "user_id",
+      "toTable": "auth_user",
+      "toColumn": "id",
+      "nullable": false,
+      "oneToOne": false
+    },
+    {
+      "fromTable": "learning_sessionquestion",
+      "fromColumn": "session_id",
+      "toTable": "learning_learningsession",
+      "toColumn": "session_id",
+      "nullable": false,
+      "oneToOne": false
+    },
+    {
+      "fromTable": "learning_sessionquestion",
+      "fromColumn": "question_id",
+      "toTable": "learning_question",
+      "toColumn": "question_id",
+      "nullable": false,
+      "oneToOne": false
+    },
+    {
+      "fromTable": "learning_questionchoice",
+      "fromColumn": "question_id",
+      "toTable": "learning_question",
+      "toColumn": "question_id",
+      "nullable": false,
+      "oneToOne": false
+    },
+    {
+      "fromTable": "learning_useranswer",
+      "fromColumn": "user_id",
+      "toTable": "auth_user",
+      "toColumn": "id",
+      "nullable": false,
+      "oneToOne": false
+    },
+    {
+      "fromTable": "learning_useranswer",
+      "fromColumn": "platform_session_id",
+      "toTable": "eventing_platformsession",
+      "toColumn": "session_uuid",
+      "nullable": true,
+      "oneToOne": false
+    },
+    {
+      "fromTable": "learning_useranswer",
+      "fromColumn": "content_id",
+      "toTable": "eventing_contentitem",
+      "toColumn": "content_uuid",
+      "nullable": true,
+      "oneToOne": false
+    },
+    {
+      "fromTable": "learning_useranswer",
+      "fromColumn": "selected_choice_id",
+      "toTable": "learning_questionchoice",
+      "toColumn": "choice_id",
+      "nullable": true,
+      "oneToOne": false
+    },
+    {
+      "fromTable": "learning_useranswer",
+      "fromColumn": "session_question_id",
+      "toTable": "learning_sessionquestion",
+      "toColumn": "session_question_id",
+      "nullable": false,
+      "oneToOne": false
+    },
+    {
+      "fromTable": "accounts_profile",
+      "fromColumn": "user_id",
+      "toTable": "auth_user",
+      "toColumn": "id",
+      "nullable": false,
+      "oneToOne": true
+    },
+    {
+      "fromTable": "accounts_profile",
+      "fromColumn": "cohort",
+      "toTable": "eventing_classgroup",
+      "toColumn": "class_group_uuid",
+      "nullable": false,
+      "oneToOne": false
+    },
+    {
+      "fromTable": "learning_pointwallet",
+      "fromColumn": "user_uuid",
+      "toTable": "accounts_profile",
+      "toColumn": "user_id",
+      "nullable": false,
+      "oneToOne": true
+    },
+    {
+      "fromTable": "learning_pointledger",
+      "fromColumn": "user_uuid",
+      "toTable": "accounts_profile",
+      "toColumn": "user_id",
+      "nullable": false,
+      "oneToOne": false
+    },
+    {
+      "fromTable": "learning_pointledger",
+      "fromColumn": "attempt_uuid",
+      "toTable": "learning_useranswer",
+      "toColumn": "attempt_uuid",
+      "nullable": false,
+      "oneToOne": true
+    },
+    {
+      "fromTable": "event_story_storyprogress",
+      "fromColumn": "user_id",
+      "toTable": "auth_user",
+      "toColumn": "id",
+      "nullable": false,
+      "oneToOne": false
+    },
+    {
+      "fromTable": "event_story_storyrecord",
+      "fromColumn": "progress_id",
+      "toTable": "event_story_storyprogress",
+      "toColumn": "id",
+      "nullable": false,
+      "oneToOne": false
+    },
+    {
+      "fromTable": "campus_control_freezechange",
+      "fromColumn": "actor_id",
+      "toTable": "auth_user",
+      "toColumn": "id",
+      "nullable": true,
+      "oneToOne": false
+    },
+    {
+      "fromTable": "eventing_contentitem",
+      "fromColumn": "category_id",
+      "toTable": "eventing_contentcategory",
+      "toColumn": "category_uuid",
+      "nullable": false,
+      "oneToOne": false
+    },
+    {
+      "fromTable": "eventing_contentitem",
+      "fromColumn": "zone_id",
+      "toTable": "eventing_mapzone",
+      "toColumn": "zone_uuid",
+      "nullable": true,
+      "oneToOne": false
+    },
+    {
+      "fromTable": "eventing_contentcategory",
+      "fromColumn": "parent_id",
+      "toTable": "eventing_contentcategory",
+      "toColumn": "category_uuid",
+      "nullable": true,
+      "oneToOne": false
+    },
+    {
+      "fromTable": "eventing_mapzone",
+      "fromColumn": "floor_id",
+      "toTable": "eventing_mapfloor",
+      "toColumn": "floor_uuid",
+      "nullable": false,
+      "oneToOne": false
+    }
+  ],
+  "source": "Current Django models + actual local PostgreSQL pg_catalog; no account/message values included"
+}
