@@ -24,6 +24,12 @@
 
 [완료 배지·공유 이미지 보기](https://github.com/encore-ai-campus/mlo-01-p4-team2/blob/main/docs/product/event-complete-share.png) · [공개 팀 저장소 반영 커밋](https://github.com/encore-ai-campus/mlo-01-p4-team2/commit/1ea64ab8b52ea920006592fcd5c03f319c4c09de) · [원본 PR #66 · 열람 권한 필요](https://github.com/playdatametaverse/playdatametaverse/pull/66) · [실행 화면과 검증 자료](docs/demo.md)
 
+## 협업과 기여 기록
+
+![팀 저장소 전체 대비 개인 활동 건수. 작성한 PR 22/54건(40.7%), 병합된 PR 20/49건(40.8%), 작성한 이슈 24/57건(42.1%).](assets/diagrams/contribution-activity.png)
+
+2026년 11월 16일 기준으로, 메타버스 팀 저장소 전체 기록 중 제 계정(`vvjeffvv3`)이 작성한 건수의 비중입니다. 병합된 PR 20건은 작성한 PR 22건에 포함되며, 나머지 2건은 병합 없이 종료됐습니다. [집계 기준과 원본 기록](docs/contributions.md)
+
 ## 프로젝트 배경
 
 3차에는 아바타로 이동하며 소통하고 학습하는 캠퍼스를 만들었습니다. 4차에는 그 공간에 이야기형 미션과 미니게임을 추가하고, 운영자가 미션 달성 여부를 확인하고 실제 보상을 지급할 수 있도록 확장했습니다. [3차 캠퍼스 소개](https://github.com/encore-ai-campus/mlo-01-p3-team2/blob/main/PRODUCT.md) · [4차 이벤트와 운영 화면](https://github.com/encore-ai-campus/mlo-01-p4-team2/blob/main/PRODUCT.md)
@@ -65,21 +71,6 @@ ROOM1 SQL 문제의 테이블과 좌우 배치를 수정하고, 게임 성공 �
 데이터 흐름, 적용 범위, 실패 시 동작은 원본 변경 파일과 확인 기록을 바탕으로 사례 문서에 정리할 예정입니다.
 
 [게시판 조회와 변경 기록](docs/case-studies/board-data-flow.md) · [구조와 데이터 흐름](docs/architecture.md)
-
-## 협업과 기여 기록
-
-**2026년 11월 16일 확인한 팀 저장소 기록**입니다.
-
-| 활동 | 개인 기록 | 집계 기준 |
-| --- | ---: | --- |
-| 작성한 PR | 22건 | 작성자 vvjeffvv3 |
-| 병합된 PR | 20건 | 작성한 PR 중 병합 완료 |
-| 병합 없이 닫힌 PR | 2건 | 작성한 PR 중 미병합 종료 |
-| 작성한 이슈 | 24건 | 작성자 vvjeffvv3 |
-
-PR와 이슈 수는 협업 활동 지표입니다. 같은 기능의 이슈와 PR를 각각 독립적인 개발 작업으로 합산하거나, PR 비중을 전체 개발 기여율로 사용하지 않습니다.
-
-[전체 집계 기준과 대표 기록](docs/contributions.md)
 
 ## 실제 실행 화면
 
