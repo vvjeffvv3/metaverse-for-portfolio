@@ -2,17 +2,57 @@
 
 **이재원 ([vvjeffvv3](https://github.com/vvjeffvv3)) · 5인 팀 프로젝트 · 이벤트 및 플랫폼 구현**
 
-부트캠프 수강생을 위한 상시 메타버스 캠퍼스를 만들고, 같은 공간을 11월 11일 빼빼로데이 이벤트 맵으로 확장해 운영했습니다.
+부트캠프 수강생을 위한 **3차 메타버스 앱**을 만들고, **4차에서 빼빼로데이 추리 이벤트**를 열었습니다. 행사 준비 과정에서 플레이어 안내와 운영 도구를 갖추고, 접속과 이동 성능을 측정해 개선했습니다.
 
-| 3차 · 기본 메타버스 캠퍼스 | 4차 · 빼빼로데이 이벤트 맵 |
-| --- | --- |
-| <img src="assets/screenshots/runtime/campus.png" width="350" alt="상시 운영용 기본 캠퍼스의 라운지와 18층 게시판"> | <img src="assets/screenshots/runtime/event-loadtest.png" width="350" alt="빼빼로데이 이벤트 맵의 장식과 미션 진행 패널이 표시된 부하 시험 화면"> |
-| 18층 캠퍼스와 옥상에서 아바타로 이동하며 채팅, 게시판, Python·SQL 학습교실을 이용합니다. | 시즌 장식, NPC 추리 미션, 옥상 미션룸, 미니게임과 완료 보상을 추가했습니다. 화면은 행사 전 부하 시험에서 촬영했습니다. |
-| [기본 캠퍼스 시연 영상 · 35초](assets/videos/original-service-demo.mp4) | [이벤트 플레이와 운영 결과](#4차-빼빼로데이-이벤트) |
+[3차 메타버스 앱과 시연](#3차-메타버스-앱) · [4차 빼빼로데이 이벤트](#4차-빼빼로데이-이벤트) · [사용자 편의와 운영 도구](#사용자-편의와-운영-도구) · [부하 시험과 성능 개선](#부하-시험과-성능-개선) · [브랜딩](#브랜딩)
+
+## 3차 메타버스 앱
+
+### 기본 캠퍼스 시연 영상
+
+https://github.com/user-attachments/assets/1a88be7e-7d3f-4d0a-8036-f4b4ca2c817a
+
+[MP4 파일 열기](assets/videos/original-service-demo.mp4) · 약 35초 · 18층 이동, 게시판, 옥상 공간
+
+수강생이 아바타로 18층 캠퍼스와 옥상을 오가며 실시간 채팅, 게시판, Python·SQL 학습교실을 이용하는 상시 서비스입니다. 저는 플랫폼 팀에서 **계정·아바타·이동·커뮤니티와 활동 이벤트 기록**을 담당했습니다. [3차 제품 소개](https://github.com/encore-ai-campus/mlo-01-p3-team2/blob/main/PRODUCT.md) · [팀 구성과 역할](https://github.com/encore-ai-campus/mlo-01-p3-team2#1-팀-소개)
+
+<img src="assets/screenshots/runtime/campus.png" width="650" alt="기본 캠퍼스 18층 라운지와 게시판이 보이는 실행 화면">
 
 ## 4차 빼빼로데이 이벤트
 
-**사라진 11번째 빼빼로**는 2026년 11월 11일에 진행한 추리 이벤트입니다. 플레이어는 탐정 꾸왕이의 의뢰를 받아 SQL로 수량 기록을 분석하고, 미니게임을 거쳐 직접 만든 빼빼로를 전달합니다. 전달을 마치면 완료 배지와 실제 보상 수령 안내를 받습니다. [이벤트 플레이 흐름과 화면](https://github.com/encore-ai-campus/mlo-01-p4-team2/blob/main/PRODUCT.md)
+**사라진 11번째 빼빼로**는 2026년 11월 11일에 진행한 추리 이벤트입니다. 기본 캠퍼스의 18층과 옥상을 행사장으로 바꾸고, 이벤트 전용 미션룸과 미니게임을 추가했습니다. [이벤트 플레이 흐름과 화면](https://github.com/encore-ai-campus/mlo-01-p4-team2/blob/main/PRODUCT.md)
+
+**플레이 흐름** · 꾸왕이에게 의뢰 받기 → 옥상 증거분석실에서 SQL 단서 확인 → 미니게임과 빼빼로 제작 → 선물 전달 → 완료 배지와 보상 안내
+
+| 이벤트 맵 | 탐정 꾸왕이와 조사 시작 |
+| --- | --- |
+| <img src="assets/screenshots/runtime/event-loadtest.png" width="350" alt="시즌 장식과 미션 진행 패널이 보이는 빼빼로데이 이벤트 맵"> | <img src="assets/screenshots/runtime/investigation-success.png" width="350" alt="탐정 꾸왕이가 증거분석실로 안내하는 이벤트 대화 화면"> |
+| 행사 전 부하 시험 | 미션 진행 검증 |
+
+### 대표 기여 · 미션 완료 배지와 이벤트 입장 흐름 (PR #66)
+
+**제가 맡은 작업은 플레이어가 캠퍼스에 들어와 미션을 시작하고, 선물 전달을 마친 뒤 달성 결과를 확인하는 흐름을 개선하는 것이었습니다.** 서버의 미션 완료 기록을 배지·보상 안내·공유 화면에 연결하고, 첫 접속 때 필요한 이미지와 이용 안내를 정리했습니다.
+
+| 개인 담당 범위 | PR #66에 반영한 내용 |
+| --- | --- |
+| **완료 배지 판정** | Django에서 계정별 최종 선물 전달 기록과 완료 시각을 읽어 **‘꾸왕이의 명예 조수’** 배지의 달성 상태를 반환했습니다. 기존 완료 기록을 재사용해 이미 미션을 끝낸 계정도 바로 배지를 확인할 수 있게 했습니다. |
+| **완료 화면과 공유** | 최종 전달이 확인되면 배지와 보상 수령일을 보여주고, 사건 해결 이미지 링크를 복사할 수 있게 했습니다. 완료 화면을 닫은 뒤에는 수사수첩에서 배지를 다시 열 수 있도록 연결했습니다. |
+| **입장 로딩과 이용 안내** | 시작 층에 필요한 이미지를 먼저 불러오고 서버 연결을 확인한 뒤 조작을 열었습니다. 나머지 이미지는 입장 후 불러오도록 했습니다. 이벤트 가이드에는 의뢰 시작 위치, 옥상 미션룸으로 가는 길, 상호작용 키를 정리했습니다. |
+
+**검증** · PR에는 미완료 계정, 최종 전달 재요청, 관리자 미리보기의 배지 판정 테스트와 시작 층 우선 로딩, 서버 연결 대기, 이미지 실패 시 재시도 테스트를 포함했습니다.
+
+**공개 검토 자료** · [완료 배지·공유 이미지](https://github.com/encore-ai-campus/mlo-01-p4-team2/blob/main/docs/product/event-complete-share.png) · [완료 배지·안내 변경 커밋](https://github.com/encore-ai-campus/mlo-01-p4-team2/commit/1ea64ab8b52ea920006592fcd5c03f319c4c09de) · [입장 로딩 테스트](https://github.com/encore-ai-campus/mlo-01-p4-team2/blob/main/platform_server/frontend/tests/entry-loading.test.cjs) · [실행 화면과 검증 자료](docs/demo.md)
+
+## 사용자 편의와 운영 도구
+
+| 사용 상황 | 제공한 기능 |
+| --- | --- |
+| **플레이어 안내** | 접속 진행률과 재시도, 미션 가이드와 조작키 안내, 수사수첩에서 완료 배지 다시 보기, 공유 이미지 링크 복사 |
+| **행사 운영** | 정해진 시간에 이벤트를 자동으로 열고, 운영자가 강제 개방·종료하거나 강의 시간 중 이용을 일시정지 |
+| **매니저 대시보드** | 과정·기수별 계정 일괄 발급, 메인 미션·이스터에그 달성 확인, 보상 지급·취소 이력, CSV 내보내기 |
+| **행사 결과 대시보드** | 접속과 활동 인원, 시간대별 이용, 미션 완료율, 게임 시작·순위를 운영 기록에서 집계 |
+
+보상 지급 여부는 게임의 달성 기록을 통해 확인했습니다. 운영 대시보드는 계정 UUID로 게임 기록을 조회하고, 참가자 실명과 지급 이력은 매니저 PC에서 관리했습니다. [팀 제품 문서의 운영 대시보드](https://github.com/encore-ai-campus/mlo-01-p4-team2/blob/main/PRODUCT.md#3-운영-대시보드-4차)
 
 ### 실제 행사 이용량
 
@@ -35,7 +75,7 @@
 
 [집계 정의와 자료 출처](docs/demo.md#행사-결과-대시보드)
 
-### 부하 시험과 성능 개선
+## 부하 시험과 성능 개선
 
 | 팀 검증 항목 | 조건과 결과 |
 | --- | --- |
@@ -45,21 +85,7 @@
 
 팀은 행사 전에 연결이 몰리는 상황과 플레이 중 이동 응답을 측정했습니다. 저는 PR #66에서 **시작 층 우선 로딩과 입장 안내**를 맡았습니다. [팀 성능 측정과 시험 조건](https://github.com/encore-ai-campus/mlo-01-p4-team2#성능-개선과-검증)
 
-## 대표 기여 · 미션 완료 배지와 이벤트 입장 흐름 (PR #66)
-
-**제가 맡은 작업은 플레이어가 캠퍼스에 들어와 미션을 시작하고, 선물 전달을 마친 뒤 달성 결과를 확인하는 흐름을 개선하는 것이었습니다.** 서버의 미션 완료 기록을 배지·보상 안내·공유 화면에 연결하고, 첫 접속 때 필요한 이미지와 이용 안내를 정리했습니다.
-
-| 개인 담당 범위 | PR #66에 반영한 내용 |
-| --- | --- |
-| **완료 배지 판정** | Django에서 계정별 최종 선물 전달 기록과 완료 시각을 읽어 **‘꾸왕이의 명예 조수’** 배지의 달성 상태를 반환했습니다. 기존 완료 기록을 재사용해 이미 미션을 끝낸 계정도 바로 배지를 확인할 수 있게 했습니다. |
-| **완료 화면과 공유** | 최종 전달이 확인되면 배지와 보상 수령일을 보여주고, 사건 해결 이미지 링크를 복사할 수 있게 했습니다. 완료 화면을 닫은 뒤에는 수사수첩에서 배지를 다시 열 수 있도록 연결했습니다. |
-| **입장 로딩과 이용 안내** | 시작 층에 필요한 이미지를 먼저 불러오고 서버 연결을 확인한 뒤 조작을 열었습니다. 나머지 이미지는 입장 후 불러오도록 했습니다. 이벤트 가이드에는 의뢰 시작 위치, 옥상 미션룸으로 가는 길, 상호작용 키를 정리했습니다. |
-
-**검증** · PR에는 미완료 계정, 최종 전달 재요청, 관리자 미리보기의 배지 판정 테스트와 시작 층 우선 로딩, 서버 연결 대기, 이미지 실패 시 재시도 테스트를 포함했습니다.
-
-**공개 검토 자료** · [완료 배지·공유 이미지](https://github.com/encore-ai-campus/mlo-01-p4-team2/blob/main/docs/product/event-complete-share.png) · [완료 배지·안내 변경 커밋](https://github.com/encore-ai-campus/mlo-01-p4-team2/commit/1ea64ab8b52ea920006592fcd5c03f319c4c09de) · [입장 로딩 테스트](https://github.com/encore-ai-campus/mlo-01-p4-team2/blob/main/platform_server/frontend/tests/entry-loading.test.cjs) · [실행 화면과 검증 자료](docs/demo.md)
-
-## AI 활용 · 빼빼로데이 입장 화면
+### AI 활용 · 빼빼로데이 입장 화면
 
 2026년 11월 8일, 로그인 뒤 이미지 준비가 길어지는 구간을 개선하기 위해 입장 화면을 제안했습니다. ImageGen으로 장면을 비교하고, Codex와 로딩 코드를 반영한 뒤 실제 브라우저에서 확인했습니다.
 
@@ -75,25 +101,25 @@
 
 같은 PR의 완료 화면에서는 제가 **‘꾸왕이의 명예 조수’**라는 이름을 고르고, 보상 수령일과 이미지 링크 복사 기능을 요청했습니다. AI는 배지 아이콘을 생성하고 완료·공유 화면에 반영했습니다. [배지 제작 프롬프트](https://github.com/encore-ai-campus/mlo-01-p4-team2/blob/main/platform_server/frontend/dist/assets/achievements/kkuwang-honorary-assistant-v1.prompt.txt) · [완료 화면 변경 커밋](https://github.com/encore-ai-campus/mlo-01-p4-team2/commit/1ea64ab8b52ea920006592fcd5c03f319c4c09de)
 
+## 브랜딩
+
+| 3차 · PLAYDATA METAVERSE | 4차 · 사라진 11번째 빼빼로 |
+| --- | --- |
+| <img src="assets/overview/logo.png" width="350" alt="Learn, Connect, Play, Grow 문구가 담긴 PLAYDATA METAVERSE 로고와 소개 이미지"> | <img src="https://raw.githubusercontent.com/encore-ai-campus/mlo-01-p4-team2/10dba1a28de92d028d43bda2107a15688237f486/docs/product/event-banner.png" width="350" alt="탐정 꾸왕이의 사라진 빼빼로 사건 배너"> |
+| **Learn · Connect · Play · Grow**를 학습교실, 캠퍼스 커뮤니티, 옥상 콘텐츠로 소개했습니다. | 탐정 꾸왕이와 사건 모티프를 홍보물부터 입장 화면, 수사수첩과 완료 배지까지 이어 갔습니다. |
+
+[원본 브랜딩·제품 소개 자료 모음](docs/branding.md)
+
 ## 협업과 기여 기록
 
 ![팀 저장소 전체 대비 개인 활동 건수. 작성한 PR 22/54건(40.7%), 병합된 PR 20/49건(40.8%), 작성한 이슈 24/57건(42.1%).](assets/diagrams/contribution-activity.png)
 
 2026년 11월 16일 기준으로, 메타버스 팀 저장소 전체 기록 중 제 계정(`vvjeffvv3`)이 작성한 건수의 비중입니다. 병합된 PR 20건은 작성한 PR 22건에 포함되며, 나머지 2건은 병합 없이 종료됐습니다. [집계 기준과 원본 기록](docs/contributions.md)
 
-## 3차 기본 캠퍼스와 시연 영상
+<details>
+<summary>그 밖의 개인 작업과 팀 구성</summary>
 
-3차 프로젝트에서는 수강생이 평소에 이동하고, 소통하고, 학습할 수 있는 상시 캠퍼스를 만들었습니다. 저는 플랫폼 팀에서 **계정·아바타·이동·커뮤니티와 활동 이벤트 기록**을 맡았습니다. [3차 팀 프로젝트와 역할](https://github.com/encore-ai-campus/mlo-01-p3-team2#1-팀-소개)
-
-[![기본 캠퍼스 시연 영상 미리보기](assets/videos/demo-preview.jpg)](assets/videos/original-service-demo.mp4)
-
-[기본 캠퍼스 시연 영상 보기](assets/videos/original-service-demo.mp4) · 약 35초 · 18층 이동, 게시판, 옥상 공간
-
-[기본 캠퍼스 실행 화면과 서비스 소개 자료](docs/demo.md#3차-기본-캠퍼스)
-
-## 그 밖의 개인 기여
-
-### 4차 이벤트 운영과 게임 콘텐츠
+#### 4차 이벤트 운영과 게임 콘텐츠
 
 이벤트 운영 제어, 18층 게임과 이동 처리, 미션룸의 조작과 안내를 개선했습니다.
 
@@ -108,7 +134,7 @@
 
 [이벤트 운영과 게임 흐름 기록](docs/case-studies/event-operations.md) · [미니게임과 이벤트 맵 검증 화면](docs/demo.md#4차-빼빼로데이-이벤트)
 
-### 플랫폼 공통 기능과 별도 시즌 콘텐츠
+#### 플랫폼 공통 기능과 별도 시즌 콘텐츠
 
 게시판의 조회 경로와 삭제 기록을 개선했습니다. 별도 크리스마스 콘텐츠에서는 빌리지·산타 NPC와 입장·층 이동 연출을 구현하는 작업에 참여했습니다.
 
@@ -120,22 +146,7 @@
 
 [게시판 조회와 변경 기록](docs/case-studies/board-data-flow.md) · [구조와 데이터 흐름](docs/architecture.md)
 
-## 이벤트 메인 미션 데이터 구조
-
-원본의 PostgreSQL 메인 미션 ERD를 가져왔습니다. 2026년 11월 3일 기준 문서이며, 단계 진행 상태와 게임 한 판의 기록을 분리한 구조를 보여줍니다.
-
-![메인 미션 ERD 미리보기](assets/diagrams/main-mission/preview.png)
-
-- [테이블 관계와 컬럼 설명](docs/reference/main-mission-erd.md)
-- [ERD HTML 원본](assets/diagrams/main-mission/index.html) — 다운로드 후 브라우저에서 열면 확대와 테이블 검색 가능
-- [스키마 JSON](assets/diagrams/main-mission/schema.json)
-- [플랫폼 구조와 요청 흐름](docs/architecture.md)
-
-구조 자료는 팀 프로젝트 전체의 설계 참고 자료입니다. 개인 담당 작업은 위의 개인 기여 설명과 구분합니다.
-
-## 팀 구성
-
-원본 소개 문서에 기재된 역할입니다.
+#### 팀 구성
 
 | 이름 | 담당 | GitHub |
 | --- | --- | --- |
@@ -145,22 +156,15 @@
 | 김남동 | 광고 서버 | [rlaskaehd](https://github.com/rlaskaehd) |
 | 조성현 | 인프라 구축 | [seonghyeonjo2](https://github.com/seonghyeonjo2) |
 
+</details>
+
 ## 공개 자료와 출처
 
-이 포트폴리오는 공개 저장소입니다. [기본 캠퍼스 시연 영상](assets/videos/original-service-demo.mp4), [행사 대시보드와 실행 화면](docs/demo.md), [개인 기여 기록](docs/contributions.md)은 로그인 없이 볼 수 있습니다. 촬영·검증 조건과 [자료 출처](docs/reference/source-materials.md)도 함께 공개합니다.
-
-## 문서와 작업공간
-
-| 위치 | 내용 |
-| --- | --- |
-| [프로젝트 개요](docs/overview.md) | 서비스 목적과 기본 정보 |
-| [개인 기여](docs/contributions.md) | 집계 기준과 원본 참고 링크 |
-| [기능별 사례](docs/case-studies/README.md) | 구현 설명과 작성 템플릿 |
-| [구조와 데이터 흐름](docs/architecture.md) | 구조도와 기술 선택 |
-| [별도 데모](demo/README.md) | 독립 실행 데모를 추가할 공간 |
-| [작업 목록](WORKSPACE.md) | 다음 작업과 완료 기준 |
-
-프로젝트 기간과 팀 구성, 사례별 변경 파일, 실행 화면, 검증 결과는 작업 목록에 따라 보완합니다.
+- [시연 영상·실행 화면·행사 결과 대시보드](docs/demo.md)
+- [브랜딩과 원본 서비스 소개](docs/branding.md)
+- [기능별 사례와 PR 기록](docs/case-studies/README.md) · [개인 기여 기록](docs/contributions.md)
+- [메인 미션 ERD](docs/reference/main-mission-erd.md) · [플랫폼 구조와 요청 흐름](docs/architecture.md)
+- [자료 출처와 제작 기준](docs/reference/source-materials.md)
 
 <details>
 <summary>비공개 원본 작업 기록 · 팀 저장소 열람 권한 필요</summary>

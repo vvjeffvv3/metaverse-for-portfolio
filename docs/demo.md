@@ -6,9 +6,9 @@
 
 ### 기본 캠퍼스 시연 영상
 
-[![기본 캠퍼스 팀 시연 영상 미리보기](../assets/videos/demo-preview.jpg)](../assets/videos/original-service-demo.mp4)
+https://github.com/user-attachments/assets/1a88be7e-7d3f-4d0a-8036-f4b4ca2c817a
 
-[기본 캠퍼스 시연 영상 보기](../assets/videos/original-service-demo.mp4)
+[기본 캠퍼스 시연 MP4 파일 열기](../assets/videos/original-service-demo.mp4)
 
 - 길이: 34.57초
 - 해상도: 1920×940, H.264, 30fps
