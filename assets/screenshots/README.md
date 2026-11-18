@@ -1,7 +1,5 @@
-# 화면 캡처
+# 실제 실행 캡처
 
-기능별 PNG 또는 JPG 화면을 이 폴더에 추가합니다.
+원본의 캠퍼스 UI와 부하 시험·기능 검증 과정에서 저장된 브라우저 캡처 8장입니다.
 
-파일명 예: event-entry.png, mission-complete.png, board-view.png
-
-각 화면의 기능 설명과 개인 담당 범위는 docs/demo.md 또는 해당 사례 문서에 기록합니다.
+[전체 화면과 테스트 조건](../../docs/demo.md) · [파일 목록](runtime/)
