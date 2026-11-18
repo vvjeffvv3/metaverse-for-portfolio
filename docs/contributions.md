@@ -15,14 +15,20 @@
 
 PR 작성 비중은 22 / 54로 약 40.7%입니다. 이는 PR 건수 비중이며 전체 작업량이나 코드 기여율이 아닙니다. 커밋 수, 변경 줄 수와 성능 개선 수치는 아직 집계하지 않았습니다.
 
-## 원본 기록 확인
+## 공개 검토 자료
+
+- [PR #66의 완료 배지·안내가 반영된 팀 저장소 커밋](https://github.com/encore-ai-campus/mlo-01-p4-team2/commit/1ea64ab8b52ea920006592fcd5c03f319c4c09de)
+- [입장 로딩 테스트 코드](https://github.com/encore-ai-campus/mlo-01-p4-team2/blob/main/platform_server/frontend/tests/entry-loading.test.cjs)
+- [시연 영상, 실행 화면, 행사 운영 결과](demo.md)
+
+## 비공개 팀 저장소 기록
 
 - [개인 작성 PR 목록](https://github.com/playdatametaverse/playdatametaverse/pulls?q=is%3Apr+author%3Avvjeffvv3)
 - [개인 작성 이슈 목록](https://github.com/playdatametaverse/playdatametaverse/issues?q=is%3Aissue+author%3Avvjeffvv3)
 
-원본이 비공개인 경우 열람 권한이 필요합니다. 최종 제출 전에 수치를 다시 확인합니다.
+이 절의 원본 링크에는 팀 저장소 열람 권한이 필요합니다.
 
-## 대표 PR 후보
+### 대표 PR 목록
 
 아래 목록은 앞서 확인한 PR 제목을 기준으로 한 사례 후보입니다. 상세 구현과 성과는 변경 파일 및 실행 결과를 확인한 뒤 추가합니다.
 

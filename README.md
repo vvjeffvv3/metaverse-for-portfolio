@@ -57,7 +57,7 @@
 
 **검증** · 미완료 계정, 최종 전달 재요청, 관리자 미리보기에서 배지와 완료 기록이 의도대로 처리되는지 확인하는 Django 테스트를 추가했습니다. 입장 로딩에는 시작 층 우선 로딩, 서버 연결 대기, 이미지 로딩 실패 시 재시도를 확인하는 테스트를 추가했습니다.
 
-[완료 배지·공유 이미지 보기](https://github.com/encore-ai-campus/mlo-01-p4-team2/blob/main/docs/product/event-complete-share.png) · [공개 팀 저장소 반영 커밋](https://github.com/encore-ai-campus/mlo-01-p4-team2/commit/1ea64ab8b52ea920006592fcd5c03f319c4c09de) · [원본 PR #66 · 열람 권한 필요](https://github.com/playdatametaverse/playdatametaverse/pull/66) · [실행 화면과 검증 자료](docs/demo.md)
+**공개 검토 자료** · [완료 배지·공유 이미지](https://github.com/encore-ai-campus/mlo-01-p4-team2/blob/main/docs/product/event-complete-share.png) · [완료 배지·안내 변경 커밋](https://github.com/encore-ai-campus/mlo-01-p4-team2/commit/1ea64ab8b52ea920006592fcd5c03f319c4c09de) · [입장 로딩 테스트](https://github.com/encore-ai-campus/mlo-01-p4-team2/blob/main/platform_server/frontend/tests/entry-loading.test.cjs) · [실행 화면과 검증 자료](docs/demo.md)
 
 ## 협업과 기여 기록
 
@@ -129,11 +129,9 @@
 | 김남동 | 광고 서버 | [rlaskaehd](https://github.com/rlaskaehd) |
 | 조성현 | 인프라 구축 | [seonghyeonjo2](https://github.com/seonghyeonjo2) |
 
-## 시연 자료와 출처
+## 공개 자료와 출처
 
-[공개 자료 목록](docs/demo.md)에서 가져온 이미지와 설계 문서를 확인할 수 있습니다. 원본 시연 영상과 실제 브라우저 캡처를 이 저장소에 옮겼습니다. 촬영 버전과 테스트 조건은 공개 자료 목록에 표시했습니다.
-
-자료의 원본 경로, 브랜치와 커밋은 [자료 출처](docs/reference/source-materials.md)에 기록했습니다.
+이 포트폴리오는 공개 저장소입니다. [기본 캠퍼스 시연 영상](assets/videos/original-service-demo.mp4), [행사 대시보드와 실행 화면](docs/demo.md), [개인 기여 기록](docs/contributions.md)은 로그인 없이 볼 수 있습니다. 촬영·검증 조건과 [자료 출처](docs/reference/source-materials.md)도 함께 공개합니다.
 
 ## 문서와 작업공간
 
@@ -148,12 +146,12 @@
 
 프로젝트 기간과 팀 구성, 사례별 변경 파일, 실행 화면, 검증 결과는 작업 목록에 따라 보완합니다.
 
-## 원본 저장소 열람 안내
+<details>
+<summary>비공개 원본 작업 기록 · 팀 저장소 열람 권한 필요</summary>
 
-원본 팀 저장소는 비공개이므로 외부 방문자는 아래 코드·PR·이슈 링크를 열 수 없습니다. 링크는 원본 열람 권한이 있는 사람을 위한 참고 자료이며, 공개 포트폴리오의 기능 설명은 위 본문과 이 저장소의 문서에서 확인할 수 있습니다.
+- [원본 팀 저장소](https://github.com/playdatametaverse/playdatametaverse)
+- [원본 PR #66](https://github.com/playdatametaverse/playdatametaverse/pull/66)
+- [개인 작성 PR 목록](https://github.com/playdatametaverse/playdatametaverse/pulls?q=is%3Apr+author%3Avvjeffvv3)
+- [개인 작성 이슈 목록](https://github.com/playdatametaverse/playdatametaverse/issues?q=is%3Aissue+author%3Avvjeffvv3)
 
-- [원본 팀 저장소 — 접근 권한 필요](https://github.com/playdatametaverse/playdatametaverse)
-- [개인 작성 PR 목록 — 접근 권한 필요](https://github.com/playdatametaverse/playdatametaverse/pulls?q=is%3Apr+author%3Avvjeffvv3)
-- [개인 작성 이슈 목록 — 접근 권한 필요](https://github.com/playdatametaverse/playdatametaverse/issues?q=is%3Aissue+author%3Avvjeffvv3)
-
-소개 이미지와 ERD는 이 저장소에 복사해 외부에서도 열람할 수 있습니다. 실제 실행 캡처와 시연 영상도 이 저장소에서 열람할 수 있습니다.
+</details>
